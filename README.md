@@ -2,6 +2,10 @@
 
 DrawIt is a production-ready starter for a realtime multiplayer drawing-and-guessing game inspired by Skribbl.io, Gartic.io, and Drawize. It uses Node.js, Express, Socket.IO, vanilla JavaScript, and the HTML5 Canvas API.
 
+## Live App
+
+DrawIt Deployment: https://drawit-6s0s.onrender.com/
+
 ## Features
 
 - Private room creation and room-code joining
@@ -69,7 +73,7 @@ npm start
 
 - `PORT`: HTTP and Socket.IO port. Default: `3000`.
 - `NODE_ENV`: `development` or `production`.
-- `CLIENT_ORIGIN`: allowed browser origin for Socket.IO CORS. Use your deployed frontend URL in production.
+- `CLIENT_URL`: allowed browser origin for Socket.IO CORS. For the live deployment, use `https://drawit-6s0s.onrender.com`.
 - `MAX_PLAYERS_PER_ROOM`: active player cap before joins become spectators.
 - `DEFAULT_ROUNDS`: number of rounds per game.
 - `TURN_SECONDS`: drawing turn length.
@@ -154,18 +158,25 @@ This project includes baseline protections:
 
 For a public deployment, add persistent rate limiting, stronger profanity filtering, abuse reporting, and authentication.
 
-## Deployment
+## DrawIt Deployment
 
-### Render or Railway
+The final deployed app is hosted as one full-stack Render web service:
 
-Use a Node service:
+https://drawit-6s0s.onrender.com/
+
+Render serves both:
+
+- the Express and Socket.IO backend
+- the static frontend from `client/`
+
+Production settings:
 
 - Build command: `npm install`
 - Start command: `npm start`
 - Set `NODE_ENV=production`
-- Set `CLIENT_ORIGIN` to your deployed app URL
+- Set `CLIENT_URL=https://drawit-6s0s.onrender.com`
 
-Both Render and Railway support WebSockets on normal web services.
+Render provides HTTPS automatically and supports WebSockets on normal web services.
 
 ### VPS
 
@@ -177,10 +188,6 @@ PORT=3000 NODE_ENV=production npm start
 ```
 
 Put Nginx or Caddy in front of the app and make sure WebSocket upgrade headers are passed through.
-
-### Vercel Frontend Plus Node Backend
-
-The current app serves the frontend from Express, which is simplest. If you split the frontend to Vercel, deploy the `client/` folder as static files and deploy `server/` to Render, Railway, Fly.io, or a VPS. Then update the Socket.IO connection URL in `client/js/room.js` and set `CLIENT_ORIGIN` on the backend.
 
 ## Scaling With Redis and Multiple Servers
 

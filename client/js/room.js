@@ -35,6 +35,7 @@ const elements = {
 };
 
 const params = new URLSearchParams(window.location.search);
+const BACKEND_URL = "https://drawit-6s0s.onrender.com";
 const joinMode = params.get("mode") || "join";
 const initialRoomId = (params.get("room") || "").toUpperCase();
 const username = (params.get("name") || localStorage.getItem("drawit:username") || "Player").slice(
@@ -92,8 +93,8 @@ function updateUrl(roomId) {
 }
 
 function connect() {
-  state.socket = io({
-    transports: ["websocket", "polling"]
+  state.socket = io(BACKEND_URL, {
+    transports: ["websocket"]
   });
 
   state.socket.on("connect", () => {
