@@ -1,0 +1,33 @@
+{
+  "name": "drawit",
+  "version": "1.0.0",
+  "description": "Realtime multiplayer drawing and guessing game built with Node.js, Express, Socket.IO, and vanilla JavaScript.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": [
+    "socket.io",
+    "canvas",
+    "multiplayer",
+    "drawing-game",
+    "skribbl"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "overrides": {
+    "ws": "^8.20.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DrawIt | Realtime Drawing Game</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body class="home-page">
+    <div class="background-grid" aria-hidden="true"></div>
+    <main class="home-shell">
+      <section class="home-hero">
+        <p class="eyebrow">Realtime multiplayer canvas</p>
+        <h1>DrawIt</h1>
+        <p class="hero-copy">
+          Create a private room, draw the secret word, and race your friends to the top of
+          the leaderboard.
+        </p>
+      </section>
+
+      <section class="home-card" aria-label="Create or join a room">
+        <form id="homeForm" class="home-form">
+          <label class="field-label" for="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            class="text-input"
+            type="text"
+            maxlength="18"
+            autocomplete="nickname"
+            placeholder="PixelPilot"
+            required
+          />
+
+          <label class="field-label" for="roomCode">Room code</label>
+          <input
+            id="roomCode"
+            name="roomCode"
+            class="text-input code-input"
+            type="text"
+            maxlength="8"
+            autocomplete="off"
+            placeholder="AB12CD"
+          />
+
+          <div class="button-row">
+            <button id="createRoomBtn" class="btn btn-primary" type="button">
+              Create Room
+            </button>
+            <button id="joinRoomBtn" class="btn btn-secondary" type="submit">
+              Join Room
+            </button>
+          </div>
+          <p id="homeError" class="form-error" role="alert"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="/js/home.js"></script>
+  </body>
+</html>

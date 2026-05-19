@@ -1,0 +1,27 @@
+{
+  "animals": {
+    "easy": ["cat", "dog", "fish", "bird", "horse", "cow", "frog", "duck", "lion", "bear"],
+    "medium": ["giraffe", "penguin", "kangaroo", "dolphin", "octopus", "turtle", "zebra", "camel"],
+    "hard": ["chameleon", "porcupine", "armadillo", "platypus", "salamander", "flamingo"]
+  },
+  "objects": {
+    "easy": ["chair", "phone", "book", "clock", "pencil", "shoe", "lamp", "key", "door", "cup"],
+    "medium": ["backpack", "umbrella", "keyboard", "telescope", "microwave", "suitcase", "headphones"],
+    "hard": ["microscope", "stethoscope", "accordion", "typewriter", "binoculars", "hourglass"]
+  },
+  "movies": {
+    "easy": ["frozen", "avatar", "jaws", "up", "cars", "shrek", "coco"],
+    "medium": ["star wars", "toy story", "jurassic park", "black panther", "finding nemo", "the matrix"],
+    "hard": ["interstellar", "spirited away", "the godfather", "parasite", "blade runner", "oppenheimer"]
+  },
+  "technology": {
+    "easy": ["robot", "laptop", "camera", "wifi", "tablet", "mouse", "screen"],
+    "medium": ["algorithm", "database", "satellite", "password", "bluetooth", "printer", "joystick"],
+    "hard": ["blockchain", "motherboard", "encryption", "semiconductor", "microchip", "quantum computer"]
+  },
+  "food": {
+    "easy": ["pizza", "burger", "apple", "cake", "bread", "sushi", "taco", "salad", "donut"],
+    "medium": ["spaghetti", "pancakes", "sandwich", "croissant", "lasagna", "burrito", "omelette"],
+    "hard": ["ratatouille", "bruschetta", "quesadilla", "gnocchi", "macaron", "bibimbap"]
+  }
+}

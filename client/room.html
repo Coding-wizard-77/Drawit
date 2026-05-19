@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DrawIt Room</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body class="room-page">
+    <div class="background-grid" aria-hidden="true"></div>
+
+    <div class="game-shell">
+      <header class="game-header">
+        <a class="brand-mark" href="/">DrawIt</a>
+
+        <button id="copyRoomBtn" class="room-code" type="button" title="Copy room code">
+          <span>Room</span>
+          <strong id="roomCodeLabel">------</strong>
+        </button>
+
+        <div class="word-pill" id="wordPill">
+          <span id="wordLabel">Waiting for players</span>
+        </div>
+
+        <div class="round-pill">
+          <span>Round</span>
+          <strong id="roundLabel">0/0</strong>
+        </div>
+
+        <div class="timer" id="timerWidget" style="--progress: 0deg">
+          <span id="timerText">--</span>
+        </div>
+
+        <button id="leaveRoomBtn" class="leave-btn" type="button" title="Exit to home">
+          Exit
+        </button>
+      </header>
+
+      <main class="game-layout">
+        <aside class="panel players-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Lobby</p>
+              <h2 id="roomStatus">Connecting</h2>
+            </div>
+            <span id="playerCount" class="count-badge">0/8</span>
+          </div>
+
+          <button id="startGameBtn" class="btn btn-primary full-width" type="button" disabled>
+            Start Game
+          </button>
+
+          <div id="playerList" class="player-list" aria-live="polite"></div>
+        </aside>
+
+        <section class="board-column">
+          <div id="turnBanner" class="turn-banner hidden"></div>
+
+          <div class="canvas-frame">
+            <canvas id="drawingCanvas" aria-label="Shared drawing canvas"></canvas>
+            <div id="canvasOverlay" class="canvas-overlay">
+              <strong id="overlayTitle">Waiting room</strong>
+              <span id="overlayText">The host can start once two players join.</span>
+            </div>
+          </div>
+
+          <div class="toolbar panel">
+            <label class="tool-control color-control" title="Brush color">
+              <span>Color</span>
+              <input id="colorPicker" type="color" value="#12d6df" />
+            </label>
+
+            <label class="tool-control size-control" title="Brush size">
+              <span>Size</span>
+              <input id="brushSize" type="range" min="2" max="42" value="8" />
+              <strong id="brushSizeLabel">8</strong>
+            </label>
+
+            <button id="eraserBtn" class="icon-btn" type="button" title="Eraser">Erase</button>
+            <button id="undoBtn" class="icon-btn" type="button" title="Undo last stroke">Undo</button>
+            <button id="clearBtn" class="icon-btn danger" type="button" title="Clear canvas">Clear</button>
+          </div>
+        </section>
+
+        <aside class="panel chat-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Live</p>
+              <h2>Chat</h2>
+            </div>
+          </div>
+
+          <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+
+          <form id="chatForm" class="chat-form">
+            <input
+              id="chatInput"
+              class="text-input"
+              type="text"
+              maxlength="180"
+              autocomplete="off"
+              placeholder="Type a guess..."
+            />
+            <button class="btn btn-secondary" type="submit">Send</button>
+          </form>
+        </aside>
+      </main>
+    </div>
+
+    <section id="wordModal" class="modal-backdrop hidden" aria-modal="true" role="dialog">
+      <div class="modal-card">
+        <p class="panel-kicker">Your turn</p>
+        <h2>Choose a word</h2>
+        <div id="wordOptions" class="word-options"></div>
+      </div>
+    </section>
+
+    <section id="scoreModal" class="modal-backdrop hidden" aria-modal="true" role="dialog">
+      <div class="modal-card">
+        <p class="panel-kicker">Game over</p>
+        <h2>Final leaderboard</h2>
+        <div id="finalScores" class="final-scores"></div>
+        <button id="closeScoreBtn" class="btn btn-primary full-width" type="button">
+          Back to lobby
+        </button>
+      </div>
+    </section>
+
+    <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/room.js"></script>
+  </body>
+</html>
