@@ -22,6 +22,7 @@
 html,
 body {
   min-height: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -725,6 +726,19 @@ a {
   border-color: rgba(251, 113, 133, 0.44);
 }
 
+@media (pointer: coarse) {
+  .btn,
+  .icon-btn,
+  .room-code,
+  .leave-btn {
+    min-height: 48px;
+  }
+
+  .text-input {
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 1100px) {
   .game-layout {
     grid-template-columns: 260px minmax(0, 1fr);
@@ -738,8 +752,29 @@ a {
 }
 
 @media (max-width: 820px) {
+  .room-page {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
   .home-shell {
     grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .game-shell {
+    grid-template-rows: auto auto;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    padding:
+      max(12px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(12px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
   }
 
   .game-header {
@@ -753,7 +788,9 @@ a {
 
   .game-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 1fr) 150px 190px;
+    grid-template-rows: auto auto auto;
+    height: auto;
+    overflow: visible;
   }
 
   .players-panel {
@@ -762,18 +799,45 @@ a {
 
   .board-column {
     order: 1;
+    grid-template-rows: auto auto auto;
+    overflow: visible;
   }
 
   .chat-panel {
     order: 3;
+    min-height: 320px;
+    max-height: 430px;
+  }
+
+  .players-panel {
+    max-height: 280px;
+  }
+
+  .canvas-frame {
+    height: clamp(320px, 54dvh, 520px);
+    min-height: 320px;
+  }
+
+  #drawingCanvas {
+    min-height: 320px;
+  }
+
+  .player-list {
+    max-height: 180px;
+  }
+
+  .chat-messages {
+    min-height: 170px;
   }
 
   .toolbar {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto minmax(180px, 1fr) repeat(3, minmax(66px, auto));
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
   }
 
   .size-control {
-    grid-column: 1 / -1;
+    min-width: 180px;
   }
 
   .size-control input {
@@ -783,13 +847,30 @@ a {
 }
 
 @media (max-width: 540px) {
-  .home-page,
-  .game-shell {
-    padding: 12px;
+  .home-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 16px;
   }
 
-  .button-row,
-  .chat-form {
+  .game-shell {
+    gap: 10px;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
+  }
+
+  .home-hero h1 {
+    font-size: clamp(3.2rem, 18vw, 4.8rem);
+  }
+
+  .hero-copy {
+    font-size: 1rem;
+  }
+
+  .button-row {
     grid-template-columns: 1fr;
   }
 
@@ -800,24 +881,104 @@ a {
   }
 
   .game-header {
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 8px;
   }
 
-  .room-code,
+  .brand-mark {
+    grid-column: 1 / 2;
+    order: 1;
+    align-self: center;
+    font-size: 1.15rem;
+  }
+
+  .word-pill {
+    grid-column: 1 / -1;
+    order: 2;
+  }
+
+  .room-code {
+    grid-column: 1 / 2;
+    order: 3;
+  }
+
   .round-pill {
-    padding: 0 10px;
+    grid-column: 2 / 3;
+    order: 3;
   }
 
   .timer {
+    grid-column: 3 / 4;
+    order: 3;
     justify-self: end;
   }
 
   .leave-btn {
+    grid-column: 3 / 4;
+    order: 1;
+    justify-self: end;
+  }
+
+  .room-code,
+  .round-pill,
+  .word-pill,
+  .leave-btn {
+    min-height: 42px;
     padding: 0 10px;
   }
 
+  .room-code span,
+  .round-pill span {
+    display: none;
+  }
+
+  .timer {
+    width: 46px;
+    min-height: 42px;
+  }
+
+  .timer span {
+    width: 34px;
+    height: 34px;
+    font-size: 0.86rem;
+  }
+
+  #wordLabel {
+    font-size: 0.96rem;
+  }
+
+  .game-layout {
+    gap: 10px;
+  }
+
+  .canvas-frame {
+    height: clamp(300px, 48dvh, 440px);
+    min-height: 300px;
+  }
+
+  #drawingCanvas {
+    min-height: 300px;
+  }
+
   .toolbar {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    overflow-x: visible;
+  }
+
+  .size-control {
+    grid-column: 1 / -1;
+    min-width: 0;
+    order: -1;
+  }
+
+  .color-control {
+    justify-content: center;
+  }
+
+  .color-control input {
+    width: 42px;
+    height: 38px;
   }
 
   .tool-control,
@@ -826,6 +987,81 @@ a {
   }
 
   .icon-btn {
-    min-height: 42px;
+    min-height: 44px;
+    padding: 0 8px;
+    font-size: 0.84rem;
+  }
+
+  .text-input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .chat-form {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .chat-form .btn {
+    min-width: 66px;
+    padding: 0 10px;
+  }
+
+  .players-panel {
+    max-height: 250px;
+  }
+
+  .player-list {
+    max-height: 150px;
+  }
+
+  .chat-panel {
+    min-height: 300px;
+    max-height: 380px;
+  }
+
+  .chat-messages {
+    min-height: 150px;
+  }
+
+  .player-card {
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    min-height: 58px;
+    padding: 8px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .toast-stack {
+    right: 10px;
+    bottom: 10px;
+    width: calc(100vw - 20px);
+  }
+}
+
+@media (max-width: 380px) {
+  .game-shell {
+    padding: 8px;
+  }
+
+  .brand-mark {
+    font-size: 1rem;
+  }
+
+  .room-code,
+  .round-pill,
+  .leave-btn {
+    padding: 0 8px;
+    font-size: 0.86rem;
+  }
+
+  .canvas-frame {
+    height: 300px;
+  }
+
+  .toolbar {
+    gap: 6px;
   }
 }

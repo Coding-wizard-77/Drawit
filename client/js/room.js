@@ -476,6 +476,13 @@ function setupCanvas() {
   elements.canvas.addEventListener("pointerup", stopDrawing);
   elements.canvas.addEventListener("pointercancel", stopDrawing);
   window.addEventListener("resize", resizeCanvas);
+  window.visualViewport?.addEventListener("resize", resizeCanvas);
+
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(resizeCanvas);
+    observer.observe(elements.canvas.parentElement);
+  }
+
   resizeCanvas();
 }
 
