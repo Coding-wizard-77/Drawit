@@ -9,10 +9,11 @@ const { registerSocketHandlers } = require("./socket/socketHandlers");
 
 const app = express();
 const server = http.createServer(app);
+const socketOrigins = config.clientOrigins.includes("*") ? true : config.clientOrigins;
 
 const io = new Server(server, {
   cors: {
-    origin: config.clientOrigin === "*" ? true : config.clientOrigin,
+    origin: socketOrigins,
     methods: ["GET", "POST"]
   },
   maxHttpBufferSize: 1e6,
@@ -24,8 +25,9 @@ const clientPath = path.join(__dirname, "..", "client");
 const roomStore = new RoomStore();
 const gameEngine = createGameEngine({ io, roomStore });
 
+app.set("trust proxy", 1);
 app.disable("x-powered-by");
-app.use(express.json({ limit: "32kb" }));
+app.use(express.json());
 app.use(express.static(clientPath));
 
 app.get("/health", (_req, res) => {
@@ -45,5 +47,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(config.port, () => {
-  console.log(`DrawIt server listening on http://localhost:${config.port}`);
+  console.log(`DrawIt server listening on ${config.port}`);
 });

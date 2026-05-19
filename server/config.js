@@ -8,7 +8,11 @@ const toInt = (value, fallback) => {
 module.exports = {
   port: toInt(process.env.PORT, 3000),
   nodeEnv: process.env.NODE_ENV || "development",
-  clientOrigin: process.env.CLIENT_ORIGIN || "*",
+  clientUrl: process.env.CLIENT_URL || process.env.CLIENT_ORIGIN || "*",
+  clientOrigins: (process.env.CLIENT_URL || process.env.CLIENT_ORIGIN || "*")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean),
   maxPlayersPerRoom: toInt(process.env.MAX_PLAYERS_PER_ROOM, 8),
   defaultRounds: toInt(process.env.DEFAULT_ROUNDS, 3),
   turnSeconds: toInt(process.env.TURN_SECONDS, 80),
