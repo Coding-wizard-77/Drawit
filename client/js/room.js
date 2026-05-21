@@ -54,6 +54,9 @@ const state = {
   activeStrokeId: null,
   pendingPoints: [],
   flushTimer: null,
+  canvasOverlayTimer: null,
+  canvasOverlayPromptKey: null,
+  canvasOverlayAutoHidden: false,
   currentMode: "brush",
   drawingEnabled: false
 };
@@ -264,7 +267,6 @@ function renderPlayers(players) {
 function updateCanvasAccess(room) {
   state.drawingEnabled = room.self.isDrawer && room.state === "drawing";
 
-  elements.canvasOverlay.classList.toggle("hidden", state.drawingEnabled);
   elements.colorPicker.disabled = !state.drawingEnabled;
   elements.brushSize.disabled = !state.drawingEnabled;
   elements.eraserBtn.disabled = !state.drawingEnabled;
@@ -272,6 +274,8 @@ function updateCanvasAccess(room) {
   elements.clearBtn.disabled = !state.drawingEnabled;
 
   if (state.drawingEnabled) {
+    clearCanvasOverlayAutoHide();
+    elements.canvasOverlay.classList.add("hidden");
     elements.overlayTitle.textContent = "";
     elements.overlayText.textContent = "";
     return;
@@ -282,16 +286,53 @@ function updateCanvasAccess(room) {
     elements.overlayText.textContent = room.self.hasGuessed
       ? "Nice work. Watch the rest of the turn play out."
       : "Use the chat to submit your guess.";
+    showTemporaryCanvasOverlay(
+      `${room.id}:${room.round}:${room.currentDrawerId}:${room.self.hasGuessed ? "guessed" : "guessing"}`
+    );
   } else if (room.state === "choosing") {
+    clearCanvasOverlayAutoHide();
+    elements.canvasOverlay.classList.remove("hidden");
     elements.overlayTitle.textContent = `${room.currentDrawerName} is choosing`;
     elements.overlayText.textContent = "The timer starts when a word is selected.";
   } else if (room.state === "game-over") {
+    clearCanvasOverlayAutoHide();
+    elements.canvasOverlay.classList.remove("hidden");
     elements.overlayTitle.textContent = "Game over";
     elements.overlayText.textContent = "The host can restart from the lobby.";
   } else {
+    clearCanvasOverlayAutoHide();
+    elements.canvasOverlay.classList.remove("hidden");
     elements.overlayTitle.textContent = "Waiting room";
     elements.overlayText.textContent = "The host can start once two players join.";
   }
+}
+
+function clearCanvasOverlayAutoHide() {
+  if (state.canvasOverlayTimer) {
+    clearTimeout(state.canvasOverlayTimer);
+    state.canvasOverlayTimer = null;
+  }
+
+  state.canvasOverlayPromptKey = null;
+  state.canvasOverlayAutoHidden = false;
+}
+
+function showTemporaryCanvasOverlay(promptKey) {
+  if (state.canvasOverlayPromptKey !== promptKey) {
+    if (state.canvasOverlayTimer) clearTimeout(state.canvasOverlayTimer);
+    state.canvasOverlayPromptKey = promptKey;
+    state.canvasOverlayAutoHidden = false;
+    elements.canvasOverlay.classList.remove("hidden");
+    state.canvasOverlayTimer = setTimeout(() => {
+      if (state.canvasOverlayPromptKey !== promptKey) return;
+      state.canvasOverlayTimer = null;
+      state.canvasOverlayAutoHidden = true;
+      elements.canvasOverlay.classList.add("hidden");
+    }, 3000);
+    return;
+  }
+
+  elements.canvasOverlay.classList.toggle("hidden", state.canvasOverlayAutoHidden);
 }
 
 function updateChatAccess(room) {
